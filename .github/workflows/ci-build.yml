@@ -2,11 +2,9 @@ name: Hubot Slack Adapter CI Builds
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     strategy:
       matrix:
@@ -25,8 +23,3 @@ jobs:
     - name: Run tests
       run: |
         npm test
-    - name: Send code coverage
-      run: |
-        if [[ "${{ matrix.hubot-version }}" == "^3.0" && "${{ matrix.node-version }}" == "14.x" ]]; then
-          npm run codecov
-        fi
