@@ -561,190 +561,136 @@ describe('Robot.react DEPRECATED', function() {
   });
 });
 
-// describe('Robot.fileShared', function() {
-//   before(function() {
-//     var user;
-//     user = {
-//       id: this.stubs.user.id,
-//       room: this.stubs.channel.id
-//     };
-//     this.fileSharedMessage = new FileSharedMessage(user, "F2147483862", '1360782804.083113');
-//     this.handleFileShared = function(msg) {
-//       `${msg.file_id} shared`;
-//     };
-//   });
-//   it('Should register a Listener with callback only', function() {
-//     var listener;
-//     this.slackbot.robot.fileShared(this.handleFileShared);
-//     listener = this.slackbot.robot.listeners.shift();
-//     listener.matcher(this.fileSharedMessage).should.be.true;
-//     listener.options.should.eql({
-//       id: null
-//     });
-//     listener.callback(this.fileSharedMessage).should.eql('F2147483862 shared');
-//   });
-//   it('Should register a Listener with opts and callback', function() {
-//     var listener;
-//     this.slackbot.robot.fileShared({
-//       id: 'foobar'
-//     }, this.handleFileShared);
-//     listener = this.slackbot.robot.listeners.shift();
-//     listener.matcher(this.fileSharedMessage).should.be.true;
-//     listener.options.should.eql({
-//       id: 'foobar'
-//     });
-//     listener.callback(this.fileSharedMessage).should.eql('F2147483862 shared');
-//   });
-//   it('Should register a Listener with matcher and callback', function() {
-//     var listener, matcher;
-//     matcher = function(msg) {
-//       msg.file_id === 'F2147483862';
-//     };
-//     this.slackbot.robot.fileShared(matcher, this.handleFileShared);
-//     listener = this.slackbot.robot.listeners.shift();
-//     listener.matcher(this.fileSharedMessage).should.be.true;
-//     listener.options.should.eql({
-//       id: null
-//     });
-//     listener.callback(this.fileSharedMessage).should.eql('F2147483862 shared');
-//   });
-//   it('Should register a Listener with matcher, opts, and callback', function() {
-//     var listener, matcher;
-//     matcher = function(msg) {
-//       msg.file_id === 'F2147483862';
-//     };
-//     this.slackbot.robot.fileShared(matcher, {
-//       id: 'foobar'
-//     }, this.handleFileShared);
-//     listener = this.slackbot.robot.listeners.shift();
-//     listener.matcher(this.fileSharedMessage).should.be.true;
-//     listener.options.should.eql({
-//       id: 'foobar'
-//     });
-//     listener.callback(this.fileSharedMessage).should.eql('F2147483862 shared');
-//   });
-//   it('Should register a Listener that does not match the ReactionMessage', function() {
-//     var listener, matcher;
-//     matcher = function(msg) {
-//       msg.file_id === 'J12387ALDFK';
-//     };
-//     this.slackbot.robot.fileShared(matcher, this.handleFileShared);
-//     listener = this.slackbot.robot.listeners.shift();
-//     listener.matcher(this.fileSharedMessage).should.be.false;
-//   });
-// });
-//
-// describe('Robot.hearReaction', function() {
-//   before(function() {
-//     var item, user;
-//     user = {
-//       id: this.stubs.user.id,
-//       room: this.stubs.channel.id
-//     };
-//     item = {
-//       type: 'message',
-//       channel: this.stubs.channel.id,
-//       ts: '1360782804.083113'
-//     };
-//     this.reactionMessage = new ReactionMessage('reaction_added', user, 'thumbsup', item, '1360782804.083113');
-//     this.handleReaction = function(msg) {
-//       `${msg.reaction} handled`;
-//     };
-//   });
-//   it('Should register a Listener with callback only', function() {
-//     var listener;
-//     this.slackbot.robot.hearReaction(this.handleReaction);
-//     listener = this.slackbot.robot.listeners.shift();
-//     listener.matcher(this.reactionMessage).should.be.true;
-//     listener.options.should.eql({
-//       id: null
-//     });
-//     listener.callback(this.reactionMessage).should.eql('thumbsup handled');
-//   });
-//   it('Should register a Listener with opts and callback', function() {
-//     var listener;
-//     this.slackbot.robot.hearReaction({
-//       id: 'foobar'
-//     }, this.handleReaction);
-//     listener = this.slackbot.robot.listeners.shift();
-//     listener.matcher(this.reactionMessage).should.be.true;
-//     listener.options.should.eql({
-//       id: 'foobar'
-//     });
-//     listener.callback(this.reactionMessage).should.eql('thumbsup handled');
-//   });
-//   it('Should register a Listener with matcher and callback', function() {
-//     var listener, matcher;
-//     matcher = function(msg) {
-//       msg.type === 'added';
-//     };
-//     this.slackbot.robot.hearReaction(matcher, this.handleReaction);
-//     listener = this.slackbot.robot.listeners.shift();
-//     listener.matcher(this.reactionMessage).should.be.true;
-//     listener.options.should.eql({
-//       id: null
-//     });
-//     listener.callback(this.reactionMessage).should.eql('thumbsup handled');
-//   });
-//   it('Should register a Listener with matcher, opts, and callback', function() {
-//     var listener, matcher;
-//     matcher = function(msg) {
-//       msg.type === 'removed' || msg.reaction === 'thumbsup';
-//     };
-//     this.slackbot.robot.hearReaction(matcher, {
-//       id: 'foobar'
-//     }, this.handleReaction);
-//     listener = this.slackbot.robot.listeners.shift();
-//     listener.matcher(this.reactionMessage).should.be.true;
-//     listener.options.should.eql({
-//       id: 'foobar'
-//     });
-//     listener.callback(this.reactionMessage).should.eql('thumbsup handled');
-//   });
-//   it('Should register a Listener that does not match the ReactionMessage', function() {
-//     var listener, matcher;
-//     matcher = function(msg) {
-//       msg.type === 'removed';
-//     };
-//     this.slackbot.robot.hearReaction(matcher, this.handleReaction);
-//     listener = this.slackbot.robot.listeners.shift();
-//     listener.matcher(this.reactionMessage).should.be.false;
-//   });
-// });
-//
-// describe('Users data', function() {
-//   it('Should load users data from web api', function() {
-//     var user, userperiod;
-//     this.slackbot.usersLoaded(null, this.stubs.responseUsersList);
-//     user = this.slackbot.robot.brain.data.users[this.stubs.user.id];
-//     should.eql(user.id, this.stubs.user.id);
-//     should.eql(user.name, this.stubs.user.name);
-//     should.eql(user.real_name, this.stubs.user.real_name);
-//     should.eql(user.email_address, this.stubs.user.profile.email);
-//     should.eql(user.slack.misc, this.stubs.user.misc);
-//     userperiod = this.slackbot.robot.brain.data.users[this.stubs.userperiod.id];
-//     should.eql(userperiod.id, this.stubs.userperiod.id);
-//     should.eql(userperiod.name, this.stubs.userperiod.name);
-//     should.eql(userperiod.real_name, this.stubs.userperiod.real_name);
-//     should.eql(userperiod.email_address, this.stubs.userperiod.profile.email);
-//   });
-//   it('Should merge with user data which is stored by other program', function() {
-//     var originalUser, user;
-//     originalUser = {
-//       something: 'something'
-//     };
-//     this.slackbot.robot.brain.userForId(this.stubs.user.id, originalUser);
-//     this.slackbot.usersLoaded(null, this.stubs.responseUsersList);
-//     user = this.slackbot.robot.brain.data.users[this.stubs.user.id];
-//     should.eql(user.id, this.stubs.user.id);
-//     should.eql(user.name, this.stubs.user.name);
-//     should.eql(user.real_name, this.stubs.user.real_name);
-//     should.eql(user.email_address, this.stubs.user.profile.email);
-//     should.eql(user.slack.misc, this.stubs.user.misc);
-//     should.eql(user.something, originalUser.something);
-//   });
-//   it('Should detect wrong response from web api', function() {
-//     this.slackbot.usersLoaded(null, this.stubs.wrongResponseUsersList);
-//     should.eql(this.slackbot.robot.brain.data.users[this.stubs.user.id], void 0);
-//   });
-// });
+describe('Robot.fileShared', function() {
+  before(function() {
+    const user = {
+      id: this.stubs.user.id,
+      room: this.stubs.channel.id
+    };
+    this.fileSharedMessage = new FileSharedMessage(user, "F2147483862", '1360782804.083113');
+    this.handleFileShared = msg =>`${msg.file_id} shared`;
+  });
+  it('Should register a Listener with callback only', function() {
+    this.slackbot.robot.fileShared(this.handleFileShared);
+    const listener = this.slackbot.robot.listeners.shift();
+    expect(listener.matcher(this.fileSharedMessage)).to.be.true;
+    expect(listener.options).to.eql({ id: null });
+    expect(listener.callback(this.fileSharedMessage)).to.eql('F2147483862 shared');
+  });
+  it('Should register a Listener with opts and callback', function() {
+    this.slackbot.robot.fileShared({ id: 'foobar' }, this.handleFileShared);
+    const listener = this.slackbot.robot.listeners.shift();
+    expect(listener.matcher(this.fileSharedMessage)).to.be.true;
+    expect(listener.options).to.eql({ id: 'foobar' });
+    expect(listener.callback(this.fileSharedMessage)).to.eql('F2147483862 shared');
+  });
+  it('Should register a Listener with matcher and callback', function() {
+    const matcher = msg => msg.file_id === 'F2147483862';
+    this.slackbot.robot.fileShared(matcher, this.handleFileShared);
+    const listener = this.slackbot.robot.listeners.shift();
+    expect(listener.matcher(this.fileSharedMessage)).to.be.true;
+    expect(listener.options).to.eql({
+      id: null
+    });
+    expect(listener.callback(this.fileSharedMessage)).to.eql('F2147483862 shared');
+  });
+  it('Should register a Listener with matcher, opts, and callback', function() {
+    const matcher = msg => msg.file_id === 'F2147483862';
+    this.slackbot.robot.fileShared(matcher, { id: 'foobar' }, this.handleFileShared);
+    const listener = this.slackbot.robot.listeners.shift();
+    expect(listener.matcher(this.fileSharedMessage)).to.be.true;
+    expect(listener.options).to.eql({ id: 'foobar' });
+    expect(listener.callback(this.fileSharedMessage)).to.eql('F2147483862 shared');
+  });
+  it('Should register a Listener that does not match the ReactionMessage', function() {
+    const matcher = msg => msg.file_id === 'J12387ALDFK';
+    this.slackbot.robot.fileShared(matcher, this.handleFileShared);
+    const listener = this.slackbot.robot.listeners.shift();
+    expect(listener.matcher(this.fileSharedMessage)).to.be.false;
+  });
+});
+
+describe('Robot.hearReaction', function() {
+  before(function() {
+    const user = {
+      id: this.stubs.user.id,
+      room: this.stubs.channel.id
+    };
+    const item = {
+      type: 'message',
+      channel: this.stubs.channel.id,
+      ts: '1360782804.083113'
+    };
+    this.reactionMessage = new ReactionMessage('reaction_added', user, 'thumbsup', item, '1360782804.083113');
+    this.handleReaction = msg => `${msg.reaction} handled`;
+  });
+  it('Should register a Listener with callback only', function() {
+    this.slackbot.robot.hearReaction(this.handleReaction);
+    const listener = this.slackbot.robot.listeners.shift();
+    expect(listener.matcher(this.reactionMessage)).to.be.true;
+    expect(listener.options).to.eql({ id: null });
+    expect(listener.callback(this.reactionMessage)).to.eql('thumbsup handled');
+  });
+  it('Should register a Listener with opts and callback', function() {
+    this.slackbot.robot.hearReaction({ id: 'foobar' }, this.handleReaction);
+    const listener = this.slackbot.robot.listeners.shift();
+    expect(listener.matcher(this.reactionMessage)).to.be.true;
+    expect(listener.options).to.eql({ id: 'foobar' });
+    expect(listener.callback(this.reactionMessage)).to.eql('thumbsup handled');
+  });
+  it('Should register a Listener with matcher and callback', function() {
+    const matcher = msg => msg.type === 'added';
+    this.slackbot.robot.hearReaction(matcher, this.handleReaction);
+    const listener = this.slackbot.robot.listeners.shift();
+    expect(listener.matcher(this.reactionMessage)).to.be.true;
+    expect(listener.options).to.eql({ id: null });
+    expect(listener.callback(this.reactionMessage)).to.eql('thumbsup handled');
+  });
+  it('Should register a Listener with matcher, opts, and callback', function() {
+    const matcher = msg => msg.type === 'removed' || msg.reaction === 'thumbsup';
+    this.slackbot.robot.hearReaction(matcher, { id: 'foobar' }, this.handleReaction);
+    const listener = this.slackbot.robot.listeners.shift();
+    expect(listener.matcher(this.reactionMessage)).to.be.true;
+    expect(listener.options).to.eql({ id: 'foobar' });
+    expect(listener.callback(this.reactionMessage)).to.eql('thumbsup handled');
+  });
+  it('Should register a Listener that does not match the ReactionMessage', function() {
+    const matcher = msg => msg.type === 'removed';
+    this.slackbot.robot.hearReaction(matcher, this.handleReaction);
+    const listener = this.slackbot.robot.listeners.shift();
+    expect(listener.matcher(this.reactionMessage)).to.be.false;
+  });
+});
+
+describe('Users data', function() {
+  it('Should load users data from web api', function() {
+    this.slackbot.usersLoaded(null, this.stubs.responseUsersList);
+    const user = this.slackbot.robot.brain.data.users[this.stubs.user.id];
+    expect(user.id).to.eql(this.stubs.user.id);
+    expect(user.name).to.eql(this.stubs.user.name);
+    expect(user.real_name).to.eql(this.stubs.user.real_name);
+    expect(user.email_address).to.eql(this.stubs.user.profile.email);
+    expect(user.slack.misc).to.eql(this.stubs.user.misc);
+    const userperiod = this.slackbot.robot.brain.data.users[this.stubs.userperiod.id];
+    expect(userperiod.id).to.eql(this.stubs.userperiod.id);
+    expect(userperiod.name).to.eql(this.stubs.userperiod.name);
+    expect(userperiod.real_name).to.eql(this.stubs.userperiod.real_name);
+    expect(userperiod.email_address).to.eql(this.stubs.userperiod.profile.email);
+  });
+  it('Should merge with user data which is stored by other program', function() {
+    const originalUser = { something: 'something' };
+    this.slackbot.robot.brain.userForId(this.stubs.user.id, originalUser);
+    this.slackbot.usersLoaded(null, this.stubs.responseUsersList);
+    const user = this.slackbot.robot.brain.data.users[this.stubs.user.id];
+    expect(user.id).to.eql(this.stubs.user.id);
+    expect(user.name).to.eql(this.stubs.user.name);
+    expect(user.real_name).to.eql(this.stubs.user.real_name);
+    expect(user.email_address).to.eql(this.stubs.user.profile.email);
+    expect(user.slack.misc).to.eql(this.stubs.user.misc);
+    expect(user.something).to.eql(originalUser.something);
+  });
+  it('Should detect wrong response from web api', function() {
+    this.slackbot.usersLoaded(null, this.stubs.wrongResponseUsersList);
+    expect(this.slackbot.robot.brain.data.users[this.stubs.user.id]).to.be.undefined;
+  });
+});
