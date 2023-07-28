@@ -367,37 +367,37 @@ class SlackClient {
   eventWrapper(event) {
     if (this.eventHandler) {
       // fetch full representations of the user, bot, and potentially the item_user.
-      const fetches = {};
+      let userPromise, botPromise, itemUserPromise = null;
       if (event.user) {
-        fetches.user = this.fetchUser(event.user);
+        userPromise = this.fetchUser(event.user);
       } else if (event.bot_id) {
-        fetches.bot = this.fetchBotUser(event.bot_id);
+        botPromise = this.fetchBotUser(event.bot_id);
       }
       if (event.item_user) {
-        fetches.item_user = this.fetchUser(event.item_user);
+        itemUserPromise = this.fetchUser(event.item_user);
       }
       // after fetches complete...
-      return Promise.all(Object.values(fetches)).then((fetched) => {
-        if (fetched.item_user) {
+      return Promise.all([userPromise, botPromise, itemUserPromise]).then(([user, bot, item_user]) => {
+        if (item_user) {
           // start augmenting the event with the fetched data
-          event.item_user = fetched.item_user;
+          event.item_user = item_user;
         }
         // assigning `event.user` properly depends on how the message was sent
-        if (fetched.user) {
+        if (user) {
           // messages sent from human users, apps with a bot user and using the bot token, and slackbot have the user
           // property: this is preferred if its available
-          event.user = fetched.user;
+          event.user = user;
           // fetched.bot will exist and be false if bot_id in @botUserIdMap
           // but is from custom integration or app without bot user
-        } else if (fetched.bot) {
+        } else if (bot) {
           // fetched.bot is user representation of bot since it exists in botToUserMap
           if (this.botUserIdMap[event.bot_id]) {
-            event.user = fetched.bot;
+            event.user = bot;
             // bot_id exists on all messages with subtype bot_message
             // these messages only have a user_id property if sent from a bot user (xoxb token). therefore
             // the above assignment will not happen for all messages from custom integrations or apps without a bot user
-          } else if (fetched.bot.user_id) {
-            return this.web.users.info(fetched.bot.user_id).then((res) => {
+          } else if (bot.user_id) {
+            return this.web.users.info(bot.user_id).then((res) => {
               event.user = res.user;
               this.botUserIdMap[event.bot_id] = res.user;
               return event;
