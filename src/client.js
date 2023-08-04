@@ -1,7 +1,8 @@
 'use strict';
 
-const { RtmClient, WebClient } = require('@slack/client');
 const SlackFormatter = require('./formatter');
+const { RTMClient } = require('@slack/rtm-api');
+const { WebClient } = require('@slack/web-api');
 
 class SlackClient {
   static #CONVERSATION_CACHE_TTL_MS;
@@ -35,7 +36,7 @@ class SlackClient {
     // NOTE: the recommended initialization options are `{ dataStore: false, useRtmConnect: true }`. However the
     // @rtm.dataStore property is publically accessible, so the recommended settings cannot be used without breaking
     // this object's API. The property is no longer used internally.
-    this.rtm = new RtmClient(options.token, options.rtm);
+    this.rtm = new RTMClient(options.token, options.rtm);
     this.web = new WebClient(options.token, {
       maxRequestConcurrency: 1
     });
@@ -131,10 +132,10 @@ class SlackClient {
     // NOTE: There's a performance cost to making this request, which can be avoided if instead the attempt to set the
     // topic is made regardless of the conversation type. If the conversation type is not compatible, the call would
     // fail, which is exactly the outcome in this implementation.
-    return this.web.conversations.info(conversationId).then((res) => {
+    return this.web.conversations.info({ channel: conversationId }).then((res) => {
       const conversation = res.channel;
       if (!conversation.is_im && !conversation.is_mpim) {
-        return this.web.conversations.setTopic(conversationId, topic);
+        return this.web.conversations.setTopic({ channel: conversationId, topic });
       } else {
         return this.robot.logger.debug(`Conversation ${conversationId} is a DM or MPDM. ` + "These conversation types do not have topics.");
       }
@@ -188,18 +189,18 @@ class SlackClient {
     this.robot.logger.debug(`SlackClient#send() room: ${room}, message: ${message}`);
     const options = {
       as_user: true,
-      link_names: 1,
+      link_names: true,
       // when the incoming message was inside a thread, send responses as replies to the thread
       // NOTE: consider building a new (backwards-compatible) format for room which includes the thread_ts.
       // e.g. "#{conversationId} #{thread_ts}" - this would allow a portable way to say the message is in a thread
       thread_ts: envelope.message?.thread_ts
     };
     if (typeof message !== "string") {
-      return this.web.chat.postMessage(room, message.text, { ...options, ...message }).catch((error) => {
+      return this.web.chat.postMessage({ ...options, ...message, text: message.text, channel: room }).catch((error) => {
         return this.robot.logger.error(`SlackClient#send() error: ${error.message}`);
       });
     } else {
-      return this.web.chat.postMessage(room, message, options).catch((error) => {
+      return this.web.chat.postMessage({ ...options, text: message, channel: room }).catch((error) => {
         return this.robot.logger.error(`SlackClient#send() error: ${error.message}`);
       });
     }
@@ -216,20 +217,18 @@ class SlackClient {
     const combinedResults = {
       members: []
     };
-    const pageLoaded = (error, results) => {
-      if (error) {
-        return callback(error);
+    const pageLoaded = (result) => {
+      if (result.error) {
+        return callback(result.error);
       }
-      results.members.forEach(member => {
-        combinedResults.members.push(member);
-      });
-      const cursor = results?.response_metadata?.next_cursor;
+      combinedResults.members.push(...result.members);
+      const cursor = result?.response_metadata?.next_cursor;
       if (cursor) {
         // fetch next page
         return this.web.users.list({
           limit: this.apiPageSize,
           cursor
-        }, pageLoaded);
+        }).then(pageLoaded);
       } else {
         // pagination complete, run callback with results
         return callback(null, combinedResults);
@@ -237,7 +236,7 @@ class SlackClient {
     };
     return this.web.users.list({
       limit: this.apiPageSize
-    }, pageLoaded);
+    }).then(pageLoaded);
   }
 
   /**
@@ -251,7 +250,7 @@ class SlackClient {
     }
     // User is not in brain - call users.info
     // The user will be added to the brain in EventHandler
-    return this.web.users.info(userId).then((r) => {
+    return this.web.users.info({ user: userId }).then((r) => {
       return this.updateUserInBrain(r.user);
     });
   }
@@ -290,7 +289,7 @@ class SlackClient {
       delete this.channelData[conversationId];
     }
     // Return conversations.info promise
-    return this.web.conversations.info(conversationId).then((r) => {
+    return this.web.conversations.info({ channel: conversationId }).then((r) => {
       if (r.channel) {
         this.channelData[conversationId] = {
           channel: r.channel,
@@ -397,7 +396,7 @@ class SlackClient {
             // these messages only have a user_id property if sent from a bot user (xoxb token). therefore
             // the above assignment will not happen for all messages from custom integrations or apps without a bot user
           } else if (bot.user_id) {
-            return this.web.users.info(bot.user_id).then((res) => {
+            return this.web.users.info({ user: bot.user_id }).then((res) => {
               event.user = res.user;
               this.botUserIdMap[event.bot_id] = res.user;
               return event;
