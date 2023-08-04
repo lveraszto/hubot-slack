@@ -1,6 +1,6 @@
 {
   "name": "@emartech/hubot-slack",
-  "version": "4.10.1",
+  "version": "5.0.0",
   "description": "A Slack adapter for hubot",
   "main": "./slack",
   "scripts": {
@@ -33,7 +33,7 @@
     "mocha": "10.2.0",
     "sinon": "15.2.0",
     "sinon-chai": "3.7.0",
-    "hubot": "3.4.0"
+    "hubot": "7.0.0"
   },
   "engines": {
     "node": ">= 14",
