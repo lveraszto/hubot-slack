@@ -1,6 +1,6 @@
 {
   "name": "@emartech/hubot-slack",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "A Slack adapter for hubot",
   "main": "./slack",
   "scripts": {
@@ -22,15 +22,16 @@
     "url": "https://github.com/slackapi/hubot-slack/issues"
   },
   "dependencies": {
-    "@slack/client": "3.16.1-sec.2"
+    "@slack/client": "3.16.1-sec.2",
+    "dotenv": "16.3.1"
   },
   "devDependencies": {
     "chai": "4.3.7",
     "chai-subset": "1.6.0",
+    "hubot": "7.0.0",
     "mocha": "10.2.0",
     "sinon": "15.2.0",
-    "sinon-chai": "3.7.0",
-    "hubot": "7.0.0"
+    "sinon-chai": "3.7.0"
   },
   "engines": {
     "node": ">= 14",
