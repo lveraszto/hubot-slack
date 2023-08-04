@@ -1,5 +1,5 @@
 {
-  "name": "hubot-slack",
+  "name": "@emartech/hubot-slack",
   "version": "4.10.0",
   "description": "A Slack adapter for hubot",
   "main": "./slack",
@@ -16,7 +16,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "http://github.com/slackapi/hubot-slack.git"
+    "url": "git+ssh://git@github.com/slackapi/hubot-slack.git"
   },
   "bugs": {
     "url": "https://github.com/slackapi/hubot-slack/issues"
@@ -40,45 +40,20 @@
     "npm": ">= 6.0.0"
   },
   "contributors": [
-    {
-      "name": "Myles Grant",
-      "email": "myles@tinyspeck.com"
-    },
-    {
-      "name": "Evan Solomon"
-    },
-    {
-      "name": "Jon Dalberg"
-    },
-    {
-      "name": "Patrick Connolly"
-    },
-    {
-      "name": "Chip Hayner",
-      "email": "chayner@centresource.com"
-    },
-    {
-      "name": "Eric Lindvall",
-      "email": "eric@papertrailapp.com"
-    },
-    {
-      "email": "don@slack-corp.com",
-      "name": "D.E. Goodman-Wilson"
-    },
-    {
-      "email": "jagan@slack-corp.com",
-      "name": "John Agan"
-    },
-    {
-      "email": "aoberoi@gmail.com",
-      "name": "Ankur Oberoi"
-    },
-    {
-      "email": "sdewael@slack-corp.com",
-      "name": "Shane DeWael"
-    },
-    {
-      "name": "Siôn le Roux"
-    }
-  ]
+    "Myles Grant <myles@tinyspeck.com>",
+    "Evan Solomon",
+    "Jon Dalberg",
+    "Patrick Connolly",
+    "Chip Hayner <chayner@centresource.com>",
+    "Eric Lindvall <eric@papertrailapp.com>",
+    "D.E. Goodman-Wilson <don@slack-corp.com>",
+    "John Agan <jagan@slack-corp.com>",
+    "Ankur Oberoi <aoberoi@gmail.com>",
+    "Shane DeWael <sdewael@slack-corp.com>",
+    "Siôn le Roux"
+  ],
+  "homepage": "https://github.com/slackapi/hubot-slack#readme",
+  "directories": {
+    "test": "test"
+  }
 }
