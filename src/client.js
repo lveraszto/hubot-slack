@@ -32,37 +32,6 @@ class SlackClient {
      */
     SlackClient.#CONVERSATION_CACHE_TTL_MS = parseInt(process.env.HUBOT_SLACK_CONVERSATION_CACHE_TTL_MS, 10) || 5 * 60 * 1000;
 
-    /////////////RTMClient hack
-    RTMClient.prototype.send = function(type, body = {}) {
-      const message = Object.assign(Object.assign({}, body), { type, id: this.nextMessageId() });
-      return new Promise((resolve, reject) => {
-        this.logger.debug(`send() in state: ${this.stateMachine.getStateHierarchy()}`);
-        if (this.websocket === undefined) {
-          this.logger.error('cannot send message when client is not connected');
-          reject((0, errors_1.sendWhileDisconnectedError)());
-        }
-        else if (!(this.stateMachine.getCurrentState() === 'connected' &&
-          this.stateMachine.getStateHierarchy()[1] === 'ready')) {
-          this.logger.error('cannot send message when client is not ready');
-          reject((0, errors_1.sendWhileNotReadyError)());
-        }
-        else {
-          // NOTE: future feature request: middleware pipeline to process the message before its sent
-          this.emit('outgoing_message', message);
-          const flatMessage = JSON.stringify(message);
-          this.logger.debug(`sending message on websocket: ${flatMessage}`);
-          this.websocket.send(flatMessage, (error) => {
-            if (error) {
-              this.logger.error(`failed to send message on websocket: ${error.message}`);
-              return reject((0, errors_1.websocketErrorWithOriginal)(error));
-            }
-            return resolve(message.id);
-          });
-        }
-      });
-    };
-    /////////////
-
     // Client initialization
     // NOTE: the recommended initialization options are `{ dataStore: false, useRtmConnect: true }`. However the
     // @rtm.dataStore property is publically accessible, so the recommended settings cannot be used without breaking
@@ -71,7 +40,7 @@ class SlackClient {
     this.web = new WebClient(options.token, {
       maxRequestConcurrency: 1
     });
-    this.apiPageSize = 100;
+    this.apiPageSize = 1000;
     if (!isNaN(options.apiPageSize)) {
       this.apiPageSize = parseInt(options.apiPageSize, 10);
     }

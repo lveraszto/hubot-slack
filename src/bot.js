@@ -41,9 +41,9 @@ class SlackBot extends Adapter {
       return this.robot.logger.error("Invalid token provided, please follow the upgrade instructions");
     }
     // SlackClient event handlers
-    this.client.rtm.on("open", this.open);
+    this.client.rtm.on("connected", this.open);
     this.client.rtm.on("close", this.close);
-    this.client.rtm.on("disconnect", this.disconnect);
+    this.client.rtm.on("disconnecting", this.disconnect);
     this.client.rtm.on("error", this.error);
     this.client.rtm.on("authenticated", this.authenticated);
     this.client.onEvent(this.eventHandler);
