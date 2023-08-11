@@ -1,6 +1,6 @@
 {
   "name": "@emartech/hubot-slack",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "description": "A Slack adapter for hubot",
   "main": "./slack",
   "scripts": {
@@ -22,7 +22,8 @@
     "url": "https://github.com/slackapi/hubot-slack/issues"
   },
   "dependencies": {
-    "@slack/client": "3.16.1-sec.2",
+    "@slack/rtm-api": "6.1.0",
+    "@slack/web-api": "6.9.0",
     "dotenv": "16.3.1"
   },
   "devDependencies": {
