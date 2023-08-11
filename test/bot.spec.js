@@ -70,20 +70,14 @@ describe('Logger', function() {
 });
 
 describe('Disable Sync', function() {
-  it('Should sync users by default', function(done) {
+  it('Should sync users by default', function() {
     this.slackbot.run();
-    return setTimeout(() => {
-      expect(this.slackbot.robot.brain.data.users).to.have.keys('1', '2', '3', '4');
-      done();
-    }, 0);
+    expect(this.slackbot.robot.brain.data.users).to.have.keys('1', '2', '3', '4');
   });
-  it('Should not sync users when disabled', function(done) {
+  it('Should not sync users when disabled', function() {
     this.slackbot.options.disableUserSync = true;
     this.slackbot.run();
-    return setTimeout(() => {
-      expect(this.slackbot.robot.brain.data.users).to.eql({});
-      done();
-    }, 0);
+    expect(this.slackbot.robot.brain.data.users).to.eql({});
   });
 });
 

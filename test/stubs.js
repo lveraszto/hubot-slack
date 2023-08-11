@@ -186,34 +186,34 @@ beforeEach(function() {
     }
   };
   stubs.chatMock = {
-    postMessage: (opts) => {
-      if (opts.channel === stubs.channelWillFailChatPost) {
+    postMessage: (conversationId, text, opts) => {
+      if (conversationId === stubs.channelWillFailChatPost) {
         return Promise.reject(new Error("stub error"));
       }
-      stubs.send(opts.channel, opts.text, opts);
+      stubs.send(conversationId, text, opts);
       return Promise.resolve();
     }
   };
   stubs.conversationsMock = {
-    setTopic: ({ topic }) => {
+    setTopic: (id, topic) => {
       stubs._topic = topic;
       if (stubs.receiveMock.onTopic != null) {
         stubs.receiveMock.onTopic(stubs._topic);
       }
       return Promise.resolve();
     },
-    info: (conversation) => {
-      if (conversation.channel === stubs.channel.id) {
+    info: (conversationId) => {
+      if (conversationId === stubs.channel.id) {
         return Promise.resolve({
           ok: true,
           channel: stubs.channel
         });
-      } else if (conversation.channel === stubs.DM.id) {
+      } else if (conversationId === stubs.DM.id) {
         return Promise.resolve({
           ok: true,
           channel: stubs.DM
         });
-      } else if (conversation.channel === 'C789') {
+      } else if (conversationId === 'C789') {
         return Promise.resolve();
       } else {
         return Promise.reject(new Error('conversationsMock could not match conversation ID'));
@@ -239,29 +239,29 @@ beforeEach(function() {
     }
   };
   stubs.usersMock = {
-    list: (opts) => {
+    list: (opts, cb) => {
       stubs._listCount = stubs._listCount ? stubs._listCount + 1 : 1;
       if (stubs._listError) {
-        return Promise.resolve({ error: new Error('mock error') });
+        return cb(new Error('mock error'));
       }
       if (opts?.cursor === 'mock_cursor') {
-        return Promise.resolve(stubs.userListPageLast);
+        return cb(null, stubs.userListPageLast);
       } else {
-        return Promise.resolve(stubs.userListPageWithNextCursor);
+        return cb(null, stubs.userListPageWithNextCursor);
       }
     },
-    info: ({ user }) => {
-      if (user === stubs.user.id) {
+    info: (userId) => {
+      if (userId === stubs.user.id) {
         return Promise.resolve({
           ok: true,
           user: stubs.user
         });
-      } else if (user === stubs.org_user_not_in_workspace.id) {
+      } else if (userId === stubs.org_user_not_in_workspace.id) {
         return Promise.resolve({
           ok: true,
           user: stubs.org_user_not_in_workspace
         });
-      } else if (user === 'U789') {
+      } else if (userId === 'U789') {
         return Promise.resolve();
       } else {
         return Promise.reject(new Error('usersMock could not match user ID'));
