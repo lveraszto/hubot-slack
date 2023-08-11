@@ -1,6 +1,5 @@
 'use strict';
 
-const SlackFormatter = require('./formatter');
 const { RTMClient } = require('@slack/rtm-api');
 const { WebClient } = require('@slack/web-api');
 
@@ -46,10 +45,6 @@ class SlackClient {
     }
     this.robot.logger.debug(`RtmClient initialized with options: ${JSON.stringify(options.rtm)}`);
     this.rtmStartOpts = options.rtmStart || {};
-    // Message formatter
-    // NOTE: the SlackFormatter class is deprecated. However the @format property is publicly accessible, so it cannot
-    // be removed without breaking this object's API. The property is no longer used internally.
-    this.format = new SlackFormatter(this.rtm.dataStore, this.robot);
     // Map to convert bot user IDs (BXXXXXXXX) to user representations for events from custom
     // integrations and apps without a bot user
     this.botUserIdMap = {

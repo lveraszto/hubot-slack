@@ -1,6 +1,5 @@
 'use strict';
 
-const SlackFormatter = require('../src/formatter');
 require('./stubs');
 const SlackClient = require('../src/client');
 const { RTMClient } = require('@slack/rtm-api');
@@ -14,9 +13,6 @@ describe('Init', function() {
   it('Should initialize with a Web client', function() {
     expect(this.client.web).instanceof(WebClient);
     expect(this.client.web.token).to.eql('xoxb-faketoken');
-  });
-  it('Should initialize with a SlackFormatter - DEPRECATED', function() {
-    expect(this.client.format).instanceOf(SlackFormatter);
   });
 });
 
