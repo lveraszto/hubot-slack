@@ -1,21 +1,18 @@
 'use strict';
 
-const { RtmClient, WebClient } = require('@slack/client');
-const SlackFormatter = require('../src/formatter');
+const { WebClient } = require('@slack/client');
 require('./stubs');
 const SlackClient = require('../src/client');
+const { RTMClient } = require('@slack/rtm-api');
 
 describe('Init', function() {
   it('Should initialize with an RTM client', function() {
-    expect(this.client.rtm).instanceof(RtmClient);
-    expect(this.client.rtm._token).to.eql('xoxb-faketoken');
+    expect(this.client.rtm).instanceof(RTMClient);
+    expect(this.client.rtm.webClient.token).to.eql('xoxb-faketoken');
   });
   it('Should initialize with a Web client', function() {
     expect(this.client.web).instanceof(WebClient);
     expect(this.client.web._token).to.eql('xoxb-faketoken');
-  });
-  it('Should initialize with a SlackFormatter - DEPRECATED', function() {
-    expect(this.client.format).instanceOf(SlackFormatter);
   });
 });
 
@@ -196,7 +193,7 @@ describe('disconnect()', function() {
   it('should remove all RTM listeners - LEGACY', function() {
     this.client.on('some_event', () => undefined);
     this.client.disconnect();
-    expect(this.client.rtm.listeners('some_event', true)).not.be.ok;
+    expect(this.client.rtm.listeners('some_event', true)).to.eql([]);
   });
 });
 
