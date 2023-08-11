@@ -1,6 +1,6 @@
 {
   "name": "@emartech/hubot-slack",
-  "version": "5.1.0",
+  "version": "5.1.2",
   "description": "A Slack adapter for hubot",
   "main": "./slack",
   "scripts": {
