@@ -1,6 +1,6 @@
 {
   "name": "@emartech/hubot-slack",
-  "version": "5.1.3",
+  "version": "5.1.4",
   "description": "A Slack adapter for hubot",
   "main": "./slack",
   "scripts": {
@@ -35,8 +35,8 @@
     "sinon-chai": "3.7.0"
   },
   "engines": {
-    "node": ">= 14",
-    "npm": ">= 6.0.0"
+    "node": ">= 16.20.2",
+    "npm": ">= 8.19.4"
   },
   "contributors": [
     "Myles Grant <myles@tinyspeck.com>",

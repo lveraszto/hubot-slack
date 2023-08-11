@@ -8,8 +8,8 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        node-version: [14.x, 15.x, 16.x, 17.x, 18.x, 19.x]
-        hubot-version: ['3.4.0']
+        node-version: [16.x, 17.x, 18.x, 19.x]
+        hubot-version: ['7.0.0']
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
@@ -18,7 +18,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Install dependencies
       run: |
-        npm install
+        npm ci
         npm install hubot@"${{ matrix.hubot-version }}"
     - name: Run tests
       run: |
