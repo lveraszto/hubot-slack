@@ -3,6 +3,7 @@
 require('../src/extensions');
 const SlackClient = require('../src/client');
 const { SlackTextMessage } = require('../src/message');
+const SlackFormatter = require('../src/formatter');
 const SlackBot = require('../src/bot');
 const EventEmitter = require('events');
 // Use Hubot's brain in our stubs
@@ -361,6 +362,7 @@ beforeEach(function() {
   Object.assign(this.slackbot.client.web.conversations, stubs.conversationsMock);
   Object.assign(this.slackbot, stubs.receiveMock);
   this.slackbot.self = stubs.self;
+  this.formatter = new SlackFormatter(stubs.client.dataStore, stubs.robot);
   this.slacktextmessage = new SlackTextMessage(stubs.self, void 0, void 0, {
     text: void 0
   }, stubs.channel.id, void 0, this.slackbot.client);

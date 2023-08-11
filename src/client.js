@@ -1,7 +1,7 @@
 'use strict';
 
-const { WebClient } = require('@slack/client');
-const { RTMClient } = require('@slack/rtm-api');
+const { RtmClient, WebClient } = require('@slack/client');
+const SlackFormatter = require('./formatter');
 
 class SlackClient {
   static #CONVERSATION_CACHE_TTL_MS;
@@ -35,7 +35,7 @@ class SlackClient {
     // NOTE: the recommended initialization options are `{ dataStore: false, useRtmConnect: true }`. However the
     // @rtm.dataStore property is publically accessible, so the recommended settings cannot be used without breaking
     // this object's API. The property is no longer used internally.
-    this.rtm = new RTMClient(options.token, options.rtm);
+    this.rtm = new RtmClient(options.token, options.rtm);
     this.web = new WebClient(options.token, {
       maxRequestConcurrency: 1
     });
@@ -45,6 +45,10 @@ class SlackClient {
     }
     this.robot.logger.debug(`RtmClient initialized with options: ${JSON.stringify(options.rtm)}`);
     this.rtmStartOpts = options.rtmStart || {};
+    // Message formatter
+    // NOTE: the SlackFormatter class is deprecated. However the @format property is publicly accessible, so it cannot
+    // be removed without breaking this object's API. The property is no longer used internally.
+    this.format = new SlackFormatter(this.rtm.dataStore, this.robot);
     // Map to convert bot user IDs (BXXXXXXXX) to user representations for events from custom
     // integrations and apps without a bot user
     this.botUserIdMap = {
