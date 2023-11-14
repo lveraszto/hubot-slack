@@ -1,6 +1,6 @@
 {
   "name": "@emartech/hubot-slack",
-  "version": "5.3.0",
+  "version": "5.2.1",
   "description": "A Slack adapter for hubot",
   "main": "./slack",
   "scripts": {
@@ -23,15 +23,15 @@
   },
   "dependencies": {
     "@slack/rtm-api": "6.1.1",
-    "@slack/web-api": "6.9.1",
+    "@slack/web-api": "6.9.0",
     "dotenv": "16.3.1"
   },
   "devDependencies": {
-    "chai": "4.3.10",
+    "chai": "4.3.8",
     "chai-subset": "1.6.0",
-    "hubot": "10.0.5",
+    "hubot": "8.1.0",
     "mocha": "10.2.0",
-    "sinon": "17.0.1",
+    "sinon": "16.0.0",
     "sinon-chai": "3.7.0"
   },
   "engines": {
