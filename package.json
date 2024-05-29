@@ -35,7 +35,7 @@
     "sinon-chai": "3.7.0"
   },
   "engines": {
-    "node": ">= 16.20.2",
+    "node": ">= 20.11.0",
     "npm": ">= 8.19.4"
   },
   "contributors": [
