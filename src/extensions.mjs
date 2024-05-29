@@ -1,7 +1,7 @@
 'use strict';
 
-const { Robot } = require('hubot/es2015');
-const { FileSharedMessage, MeMessage, PresenceMessage, ReactionMessage } = require("./message");
+import { Robot } from 'hubot';
+import { FileSharedMessage, MeMessage, PresenceMessage, ReactionMessage } from "./message.mjs";
 
 /**
  * Adds a Listener for ReactionMessages with the provided matcher, options, and callback

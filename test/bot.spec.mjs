@@ -1,8 +1,6 @@
-'use strict';
-
-const { loadBot } = require('hubot');
-require('./stubs');
-const { SlackTextMessage, ReactionMessage, PresenceMessage, FileSharedMessage} = require('../src/message');
+import { loadBot } from 'hubot';
+import './stubs.mjs';
+import { SlackTextMessage, ReactionMessage, PresenceMessage, FileSharedMessage} from '../src/message.mjs';
 
 describe('Adapter', function() {
   it('Should initialize with a robot', function() {

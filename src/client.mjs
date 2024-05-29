@@ -1,8 +1,7 @@
 'use strict';
 
-const { RTMClient } = require('@slack/rtm-api');
-const { WebClient } = require('@slack/web-api');
-const errors_1 = require('@slack/rtm-api/dist/errors');
+import { RTMClient } from '@slack/rtm-api';
+import { WebClient } from '@slack/web-api';
 
 class SlackClient {
   static #CONVERSATION_CACHE_TTL_MS;
@@ -422,4 +421,4 @@ class SlackClient {
   }
 }
 
-module.exports = SlackClient;
+export default SlackClient;

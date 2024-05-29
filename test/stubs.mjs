@@ -1,12 +1,13 @@
 'use strict';
 
-require('../src/extensions');
-const SlackClient = require('../src/client');
-const { SlackTextMessage } = require('../src/message');
-const SlackBot = require('../src/bot');
-const EventEmitter = require('events');
+import '../src/extensions.mjs';
+import SlackClient from '../src/client.mjs';
+import { SlackTextMessage } from '../src/message.mjs';
+// import SlackBot from '../src/bot.mjs';
+import EventEmitter from 'events';
 // Use Hubot's brain in our stubs
-const { Robot, Brain } = require('hubot/es2015');
+import { Robot, Brain } from 'hubot';
+import SlackBot from '../src/bot.mjs';
 
 // Stub a few interfaces to grease the skids for tests. These are intentionally
 // as minimal as possible and only provide enough to make the tests possible.

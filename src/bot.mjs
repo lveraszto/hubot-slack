@@ -1,10 +1,8 @@
 'use strict';
 
-const { Adapter } = require('hubot');
-const pkg = require("../package");
-const SlackClient = require("./client");
-const { SlackTextMessage, MeMessage, ReactionMessage, PresenceMessage, FileSharedMessage} = require('./message');
-const { TopicMessage, LeaveMessage, EnterMessage } = require('hubot/es2015');
+import SlackClient from "./client.mjs";
+import { SlackTextMessage, MeMessage, ReactionMessage, PresenceMessage, FileSharedMessage} from './message.mjs';
+import { Adapter, TopicMessage, LeaveMessage, EnterMessage } from 'hubot';
 
 /**
  * Slackbot is an adapter for connecting Hubot to Slack
@@ -23,7 +21,7 @@ class SlackBot extends Adapter {
     super(robot);
     this.robot = robot;
     this.options = options;
-    this.robot.logger.info("hubot-slack adapter v" + pkg.version);
+    this.robot.logger.info("hubot-slack adapter v" + process.env.npm_package_version);
     this.client = new SlackClient(this.options, this.robot);
   }
 
@@ -389,4 +387,4 @@ class SlackBot extends Adapter {
   }
 }
 
-module.exports = SlackBot
+export default SlackBot

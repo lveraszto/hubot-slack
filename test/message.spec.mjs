@@ -1,6 +1,6 @@
 'use strict';
 
-const SlackMention = require('../src/mention');
+import SlackMention from '../src/mention.mjs';
 
 describe('buildText()', function() {
   it('Should decode entities', function() {

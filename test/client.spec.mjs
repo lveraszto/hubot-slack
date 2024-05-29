@@ -1,9 +1,9 @@
 'use strict';
 
-require('./stubs');
-const SlackClient = require('../src/client');
-const { RTMClient } = require('@slack/rtm-api');
-const { WebClient } = require('@slack/web-api');
+import './stubs.mjs';
+import SlackClient from '../src/client.mjs';
+import { RTMClient } from '@slack/rtm-api';
+import { WebClient } from '@slack/web-api';
 
 describe('Init', function() {
   it('Should initialize with an RTM client', function() {

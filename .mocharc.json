@@ -1,5 +1,5 @@
 {
-  "file": ["./test/test-setup.js"],
+  "file": ["./test/test-setup.mjs"],
   "exit": true,
   "timeout": 60000
 }
