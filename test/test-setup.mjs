@@ -1,15 +1,15 @@
 'use strict';
 
 import sinon from 'sinon';
-import { use, expect } from 'chai';
+import chai from 'chai';
 import chaiSubset from 'chai-subset';
 import sinonChai from 'sinon-chai';
 
 before(function() {
-  global.expect = expect;
+  global.expect = chai.expect;
   global.sinon = sinon;
-  use(sinonChai);
-  use(chaiSubset);
+  chai.use(sinonChai);
+  chai.use(chaiSubset);
 });
 
 beforeEach(function() {
