@@ -1,9 +1,9 @@
 'use strict';
 
-import sinon from 'sinon';
-import chai from 'chai';
-import chaiSubset from 'chai-subset';
-import sinonChai from 'sinon-chai';
+const sinon = require('sinon');
+const chai = require('chai');
+const chaiSubset = require('chai-subset');
+const sinonChai = require('sinon-chai');
 
 before(function() {
   global.expect = chai.expect;

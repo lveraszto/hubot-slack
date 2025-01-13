@@ -1,9 +1,7 @@
 'use strict';
 
-import dotenv from 'dotenv';
-import SlackBot from './src/bot.mjs';
-
-dotenv.config();
+require('dotenv').config();
+const SlackBot = require('./src/bot');
 
 const use = robot => {
   const options = {

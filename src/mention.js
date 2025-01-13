@@ -14,4 +14,4 @@ class SlackMention {
 
 };
 
-export default SlackMention;
+module.exports = SlackMention;
