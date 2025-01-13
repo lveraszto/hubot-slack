@@ -34,4 +34,4 @@ const use = robot => {
   return new SlackBot(robot, options);
 };
 
-export default { use };
+module.exports = { use };
